@@ -1,6 +1,25 @@
 
 library('plyr')
 
+ExtractFeatures <- function(root.dir) {
+  file.name <- paste(root.dir, "/features.txt", sep = "")
+  features <- read.table(file.name, col.names = c("Number", "Description"), 
+                         stringsAsFactors = FALSE)
+  
+  features <- subset(features, grepl("^tBodyAcc\\-|^tGravityAcc\\-|^tBodyGyro\\-",
+                     Description))
+  features <- subset(features, grepl("mean\\(\\)|std\\(\\)" , Description))  
+  features$Description <- gsub("[+-]", ".", features$Description)
+  features$Description <- gsub("\\(|\\)|\\[|\\]", "", features$Description)
+  features
+}
+
+ExtractActivitiesLabels <- function(root.dir) {
+  file.name <- paste(root.dir, "/activity_labels.txt", sep = "")
+  read.table(file.name, col.names = c("Activity", "Label"), 
+             stringsAsFactors = FALSE)  
+}
+
 ReadDataByType <- function(root.dir, type, features, activities.labels) {
   file.name <- paste(root.dir, "/", type, "/subject_", type, ".txt",sep = "")
   subjects <- read.table(file.name, header = FALSE, col.names = c("Subject"))
@@ -17,17 +36,9 @@ ReadDataByType <- function(root.dir, type, features, activities.labels) {
 	cbind(subjects, activities, data)
 }
 
-RunAnalysis <- function(root.dir = "UCI HAR Dataset") {  
-  file.name <- paste(root.dir, "/features.txt", sep = "")
-  features <- read.table(file.name, col.names = c("Number", "Description"), 
-                         stringsAsFactors = FALSE)
-  features <- subset(features, grepl("mean\\(\\)|std\\(\\)", Description))
-  
-  
-  file.name <- paste(root.dir, "/activity_labels.txt", sep = "")
-  activities.labels <- read.table(file.name, col.names = c("Activity", "Label"), 
-                                  stringsAsFactors = FALSE)
-    
+RunAnalysis <- function(root.dir = "UCI HAR Dataset") {
+  features <- ExtractFeatures(root.dir)  
+  activities.labels <- ExtractActivitiesLabels(root.dir)
   
   data <-
     rbind(ReadDataByType(root.dir, "test", features, activities.labels), 
