@@ -104,15 +104,16 @@ Other variables (xxxJerk-, xxxMag- or fXXX) are derived(calculated) from corresp
 Data Transformation Steps
 -------------------------
 The following steps done for gettint resulting dataset from HAR dataset:
+
 1.  dataset from 'test/X_test.txt' combined with 'test/Y_test.txt' and 'test/subject_test.txt'
-   
-        So now we have one dataset with relations person => activity => measurement
+    
+    So now we have one dataset with relations person => activity => measurement
 
 2.  select variables which will be processed then 
 
 3.  dataset from 'train/X_test.txt' combined with 'train/Y_test.txt' and 'tran/subject_test.txt'
-   
-        So now we have one dataset with relations person => activity => measurement
+    
+    So now we have one dataset with relations person => activity => measurement
 
 4.  select variables which will be processed then 
 5.  combine both datasets
