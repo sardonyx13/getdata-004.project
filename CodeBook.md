@@ -100,3 +100,20 @@ We process varibles from HAR dataset which based on real measurments(std and mea
 - tBodyGyro- 
 
 Other variables (xxxJerk-, xxxMag- or fXXX) are derived(calculated) from corresponding tBodyAcc-, tGravityAcc- and tBodyGyro- and don't present a raw data. For instance: 'fBodyAcc-meanFreq()-X' is ignored because fBodyAcc derived from tBodyAcc by FFT.
+
+Data Transformation Steps
+-------------------------
+The following steps done for gettint resulting dataset from HAR dataset:
+1.  dataset from 'test/X_test.txt' combined with 'test/Y_test.txt' and 'test/subject_test.txt'
+   
+        So now we have one dataset with relations person => activity => measurement
+
+2.  select variables which will be processed then 
+
+3.  dataset from 'train/X_test.txt' combined with 'train/Y_test.txt' and 'tran/subject_test.txt'
+   
+        So now we have one dataset with relations person => activity => measurement
+
+4.  select variables which will be processed then 
+5.  combine both datasets
+6.  calculate average for each numerical variable grouped by Subject, Activity
